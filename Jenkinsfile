@@ -59,7 +59,7 @@ pipeline {
                 sh """
                     docker stop supportkarateapi || true
                     docker rm supportkarateapi || true
-                    docker run -d --name supportkarateapi -p 8081:8080 $DOCKER_USER/${IMAGE_NAME}
+                    docker run -d --name supportkarateapi -p 8081:8080 ${IMAGE_NAME}
                 """
             }
         }
