@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GameRepository extends JpaRepository<Game, Long> {
-    // Spring Data JPA sẽ tự động implement các CRUD cơ bản
 }
