@@ -7,12 +7,15 @@ pipeline {
     }
 
     stages {
-        steps {
-            sh 'java -version'
-            sh 'echo $JAVA_HOME'
-        }
+       
 
         stage('Checkout') {
+
+            steps {
+                        sh 'java -version'
+                        sh 'echo $JAVA_HOME'
+            }
+
             steps {
                 git branch: 'main', url: 'https://github.com/xuantrangk54/api-support-learn-auto-test.git'
             }
