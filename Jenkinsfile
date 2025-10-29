@@ -6,6 +6,10 @@ pipeline {
         jdk 'Java 21'   // Tên JDK đã cài trên Jenkins
     }
 
+    environment {
+        IMAGE_NAME = "supportkarateapi:latest"
+    }
+
     stages {
        
 
@@ -14,18 +18,32 @@ pipeline {
                 sh 'java -version'
                 sh 'echo $JAVA_HOME'
                 git branch: 'main', url: 'https://github.com/xuantrangk54/api-support-learn-auto-test.git'
+
             }
         }
 
         stage('Build') {
             steps {
-                sh 'mvn clean compile'
+                sh "docker build -t ${IMAGE_NAME} ."
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test'
+                // Chạy container tạm thời để chạy test
+                sh "docker run --rm ${IMAGE_NAME} mvn test"
+            }
+        }
+    
+        stage('Push Docker Image') {
+            steps {
+                // Nếu có registry, ví dụ Docker Hub
+                // withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                //     sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
+                //     sh "docker tag ${IMAGE_NAME} $DOCKER_USER/${IMAGE_NAME}"
+                //     sh "docker push $DOCKER_USER/${IMAGE_NAME}"
+                // }
+                sh "echo 'skip push image'"
             }
         }
 
@@ -37,8 +55,12 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                // Ví dụ deploy lên server hoặc copy jar
-                sh 'cp target/*.jar /path/to/deploy/'
+                // Ví dụ deploy container lên server
+                sh """
+                    docker stop supportkarateapi || true
+                    docker rm supportkarateapi || true
+                    docker run -d --name supportkarateapi -p 8080:8080 $DOCKER_USER/${IMAGE_NAME}
+                """
             }
         }
     }
