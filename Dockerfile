@@ -1,5 +1,5 @@
 # Stage 1: Build JAR với Maven (nếu muốn build trong Docker)
-FROM maven:3.9.3-eclipse-temurin-21 AS build
+FROM maven:3.9-eclipse-temurin-21-alpine AS build
 
 # Set working directory
 WORKDIR /app
