@@ -31,7 +31,7 @@ pipeline {
         stage('Test') {
             steps {
                 // Chạy container tạm thời để chạy test
-                sh "docker run --rm ${IMAGE_NAME} mvn test -Dspring.main.web-application-type=none"
+                sh "docker run --entrypoint mvn --rm ${IMAGE_NAME} mvn test -Dspring.main.web-application-type=none"
             }
         }
     
