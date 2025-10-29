@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/username/project.git'
+                git branch: 'main', url: 'https://github.com/xuantrangk54/api-support-learn-auto-test.git'
             }
         }
 
