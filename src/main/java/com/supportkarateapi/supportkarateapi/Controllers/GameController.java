@@ -22,6 +22,8 @@ public class GameController {
         return gameService.getAllGames();
     }
 
+
+
     @GetMapping("/{id}")
     public ResponseEntity<Game> getGameById(@PathVariable Long id) {
         return gameService.getGameById(id)
@@ -47,5 +49,10 @@ public class GameController {
     public ResponseEntity<Void> deleteGame(@PathVariable Long id) {
         gameService.deleteGame(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/reset")
+    public List<Game> resetAndInitData() {
+        return gameService.resetAndInitData();
     }
 }

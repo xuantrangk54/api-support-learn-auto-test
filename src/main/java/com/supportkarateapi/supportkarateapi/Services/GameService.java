@@ -44,4 +44,16 @@ public class GameService {
     public void deleteGame(Long id) {
         gameRepository.deleteById(id);
     }
+
+    public List<Game> resetAndInitData() {
+        gameRepository.deleteAll();
+        List<Game> initialGames = List.of(
+            new Game("The Witcher 3", "RPG", 39.99),
+            new Game("FIFA 2023", "Sports", 59.99),
+            new Game("Minecraft", "Sandbox", 29.99),
+            new Game("Call of Duty", "Shooter", 49.99),
+            new Game("The Legend of Zelda", "Adventure", 59.99)
+        );
+        return gameRepository.saveAll(initialGames);
+    }
 }
